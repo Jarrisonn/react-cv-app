@@ -1,0 +1,14 @@
+
+.education{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 250px;
+    background-color: darkred;
+}
+.education-form{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    height: 100%;
+}
