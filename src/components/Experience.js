@@ -46,7 +46,7 @@ const Experience = () => {
     return (
         <div className='experience'>
             <form type='submit' className='experience-form'>
-                <h2>Education</h2>
+                <h2>Experience</h2>
                 {!submitted && inputFields.map((field, index) => (
                     <div key={index} className='inputs'>
                         <label htmlFor='companyName'>Company Name</label>
