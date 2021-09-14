@@ -1,75 +1,87 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import '../styles/Education.css'
-class Education extends Component {
-    constructor(props){
-        super(props);
-        
-        this.state ={
-            schoolName: '',
-            titleOfStudy: '',
-            dateOfStudyStart: '',
-            dateOfStudyFin: '',
-            submitted: false,
-        }
-        this.onChange = this.onChange.bind(this)
+const Education = () => {
 
-        this.onSubmit = this.onSubmit.bind(this)
-    
-        this.addMore = this.addMore.bind(this)
+    const [inputFields, setInputFields] = useState([
+        {schoolName: '',titleOfStudy: '',startDate: '',endDate: '', }, 
+    ])
+    const [submitted, setSubmitted] = useState(false)
 
-    }
-
-    onChange(e){
-        
-        this.setState({
-            [e.target.name]: e.target.value
-        }, () => {
-            console.log(`School Name is: ${this.state.schoolName}`);
-            console.log(`title of study is: ${this.state.titleOfStudy}`);
-        })
-        
-    }
-    onSubmit(e){
+    const onChange = (e,index) => {
         e.preventDefault();
-        this.setState({
-            submitted: true,
-        }, () => {
-            console.log(this.state);
-        })
+        const values = [...inputFields]
+        values[index][e.target.name] = e.target.value
+        console.log(values);
+        setInputFields(values)
     }
-    addMore(){
-        return(
-            <Education/>
-        )
+
+    const addFields = (e) => {
+        e.preventDefault()
+        console.log("heelo");
+        setInputFields([...inputFields, {schoolName: '',titleOfStudy: '',startDate: '',endDate: '', }])
+    }
+
+    const onSubmitted = (event) => {
+        event.preventDefault()
+        console.log("submitted");
+        console.log(inputFields);
+        setSubmitted(true)
         
     }
-    render() {
-        const {schoolName, titleOfStudy, dateOfStudyStart, dateOfStudyFin, submitted} = this.state
-        return (
-            <div className='education'>
-                <h1>Hello from education</h1>
-                {!submitted && <form className='education-form' onSubmit={this.onSubmit}>
-                    <label htmlFor="schoolName">School Name</label>
-                    <input type='text' name='schoolName' value={schoolName} onChange={this.onChange}></input>
-                    <label htmlFor="titleOfStudy">Title of study</label>
-                    <input type='text' name='titleOfStudy' value={titleOfStudy} onChange={this.onChange}></input>
-                    <label htmlFor='dateOfStudyStart'>Start Date</label>
-                    <input type='date' name='dateOfStudyStart' value={dateOfStudyStart} onChange={this.onChange}></input>
-                    <label htmlFor='dateOfStudyFin'>Fin Date</label>
-                    <input type='date' name='dateOfStudyFin' value={dateOfStudyFin} onChange={this.onChange}></input>
-                    <button type='submit'>Submit</button>
-                </form>}
-                {submitted && 
-                <ul>
-                    <h3>{schoolName}</h3>
-                    <h3>{titleOfStudy}</h3>
-                    <h3>{dateOfStudyStart}</h3>
-                    <h3>{dateOfStudyFin}</h3>
-                    <button onClick={this.addMore}>Add more education</button>
-                </ul>}
-            </div>
-        );
+    const removeField = (event, index) => {
+
+        event.preventDefault()
+        const values = [...inputFields]
+
+        const newValues = values.splice(index,1)
+        console.log(newValues);
+        console.log(values);
+        setInputFields([...values])
+        
+       
     }
+    const edit = (event) => {
+        setSubmitted(false);
+    }
+    return (
+        <div className='education'>
+            <form type='submit' className='education-form'>
+                <h2>Education</h2>
+                {!submitted && inputFields.map((field, index) => (
+                    <div key={index} className='inputs'>
+                        <label htmlFor='schoolName'>School Name</label>
+                        <input type='text' name='schoolName' onChange={event => onChange(event,index)} value={field.firstName}></input>
+                        <label htmlFor='titleOfStudy'>titleOfStudy</label>
+                        <input type='text' name='titleOfStudy' onChange={event => onChange(event,index)} value={field.titleOfStudy}></input>
+                        <label htmlFor='startDate'>Start Date</label>
+                        <input type='date' name='startDate' onChange={event => onChange(event,index)} value={field.startDate}></input>
+                        <label htmlFor='endDate'>End Date</label>
+                        <input type='date' name='endDate' onChange={event => onChange(event,index)} value={field.endDate}></input>
+                        <button onClick={event => removeField(event, index)}>remove</button>
+                    </div>
+                ))}
+                {!submitted && <div>
+                    <button onClick={event => onSubmitted(event)}>submit</button>
+                    <button onClick={event => addFields(event)}>add more</button>
+                </div>}
+            </form>
+            {submitted && 
+            <section>
+                {inputFields.map((field, index) => (
+                    <div>
+                        <h3>School Name:{field.schoolName}</h3>
+                        <h3>Title of Study{field.titleOfStudy}</h3>
+                        <h3>Start Date:{field.startDate}</h3>
+                        <h3>End Date: {field.endDate}</h3>
+                    </div>
+                    
+                    
+                ))}
+                <button onClick={event => edit(event)}>Edit</button>
+            </section>
+                }
+        </div>
+    );
 }
 
 export default Education;

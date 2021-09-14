@@ -1,24 +1,21 @@
-.Information{
-   
+
+.experience{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 250px;
+    
 }
-
-
-
-.form{
-    background-color: rgb(161, 161, 161);
+.experience-form{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: left;
-    margin-top: 30px;
     height: 100%;
-
-    border-radius: 10px;
-    padding: 1rem;
 }
-.form input{
-    background-color: inherit;
+.inputs{
+    display: flex;
+    flex-direction: column;
 }

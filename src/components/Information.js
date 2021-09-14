@@ -49,7 +49,7 @@ export default class Information extends Component {
         const { name, email, phone, submitted } = this.state
         return (
             <div className='Information'>
-                <h2>Hello from Information component!</h2>
+                <h2>Information</h2>
                 {!submitted && <form className='form' onSubmit={this.onSubmit}>
                     <label htmlFor='name'>Name</label>
                     <input type='text' value={name} name='name' onChange={this.onChange}></input>
